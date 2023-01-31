@@ -1,11 +1,15 @@
 import { List } from "@mui/material"
 import Task from "./Task"
 
+interface TaskListProps {
+    tasks: string[],
+}
 
-const TaskList = () => {
+
+const TaskList = ({tasks}: TaskListProps) => {
   return (
     <List>
-        {[1, 2, 3].map(() => <Task/>)}
+        {tasks.map((content, i) => <Task key={i + Date.now().toString()} content={content}/>)}
     </List>
   )
 }

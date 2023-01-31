@@ -10,17 +10,22 @@ import TaskList from "./components/TaskList";
 function App() {
 
   const [searchValue, setSearchValue] = useState("");
+  const [createTaskValue, setCreateTaskValue] = useState("");
+  const [tasks, setTasks] = useState(Array<string>);
 
-
-  console.log(searchValue);
+  const creatingTask = (): void => {
+    if (createTaskValue.trim() === "") return;
+    setTasks([...tasks, createTaskValue.trim()]);
+    setCreateTaskValue("");
+  }
 
   return (
     <>
       <Header/>
       <Container maxWidth="sm">
         <SearchBar value={searchValue} setValue={setSearchValue}/>
-        <CreateTask/>
-        <TaskList/>
+        <CreateTask value={createTaskValue} setValue={setCreateTaskValue} addTask={creatingTask}/>
+        <TaskList tasks={tasks}/>
       </Container>
     </>
   )
