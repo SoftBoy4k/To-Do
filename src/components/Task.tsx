@@ -3,14 +3,17 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 interface TaskProps {
-    content: string
+    content: string,
+    id: number,
+    removingTask: (text: string, id: number) => void,
 }
 
-const Task = ({content}: TaskProps) => {
+const Task = ({content, id, removingTask}: TaskProps) => {
   return (
     <ListItem
         disableGutters
         sx={{border: "0.3px solid black", marginTop: "3%", padding: "2% 4%",}}
+        id={id.toString()}
     >
         <ListItemText primary={content}/>
         
@@ -18,7 +21,11 @@ const Task = ({content}: TaskProps) => {
             <EditIcon/>
         </IconButton>
 
-        <IconButton>
+        <IconButton onClick={(e) => {
+                const currentId: number = Number(e.currentTarget.parentElement?.id);
+                const currentContent: string = String(e.currentTarget.parentElement?.textContent);
+                removingTask(currentContent, currentId);
+            }}>
             <DeleteIcon/>
         </IconButton>
     </ListItem>
