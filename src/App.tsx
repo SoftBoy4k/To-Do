@@ -50,13 +50,22 @@ function App() {
     setIsTaskChange(false);
   }
 
+  const getSearchTasks = () => {
+    const value = searchValue.trim().toLowerCase()
+		if (value.length > 0) {
+			return tasks.filter(el => el.text.toLowerCase().includes(value))
+		} else {
+			return tasks
+		}
+  }
+
   return (
     <>
       <Header/>
       <Container maxWidth="sm">
         <SearchBar value={searchValue} setValue={setSearchValue}/>
         <CreateTask value={taskValue} setValue={setTaskValue} addTask={creatingTask} isTaskChange={isTaskChange} taskChange={taskChange} idChangeableTask={idChangeableTask}/>
-        <TaskList tasks={tasks} removingTask={removingTask} editTask={editTask}/>
+        <TaskList tasks={getSearchTasks()} removingTask={removingTask} editTask={editTask}/>
       </Container>
     </>
   )
