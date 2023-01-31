@@ -5,10 +5,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 interface TaskProps {
     content: string,
     id: number,
-    removingTask: (text: string, id: number) => void,
+    removingTask: (id: number) => void,
+    editTask: (id: number) => void,
 }
 
-const Task = ({content, id, removingTask}: TaskProps) => {
+const Task = ({content, id, removingTask, editTask}: TaskProps) => {
   return (
     <ListItem
         disableGutters
@@ -17,15 +18,17 @@ const Task = ({content, id, removingTask}: TaskProps) => {
     >
         <ListItemText primary={content}/>
         
-        <IconButton>
+        <IconButton onClick={(e) => {
+            const currentId: number = Number(e.currentTarget.parentElement?.id);
+            editTask(currentId);
+        }}>
             <EditIcon/>
         </IconButton>
 
         <IconButton onClick={(e) => {
-                const currentId: number = Number(e.currentTarget.parentElement?.id);
-                const currentContent: string = String(e.currentTarget.parentElement?.textContent);
-                removingTask(currentContent, currentId);
-            }}>
+            const currentId: number = Number(e.currentTarget.parentElement?.id);
+            removingTask(currentId);
+        }}>
             <DeleteIcon/>
         </IconButton>
     </ListItem>

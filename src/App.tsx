@@ -16,22 +16,38 @@ let idCreater: number = 0;
 function App() {
 
   const [searchValue, setSearchValue] = useState("");
-  const [createTaskValue, setCreateTaskValue] = useState("");
+  const [taskValue, setTaskValue] = useState("");
   const [tasks, setTasks] = useState(Array<Tasks>);
+  const [isTaskChange, setIsTaskChange] = useState(false);
+  const [idChangeableTask, setIdChangeableTask] = useState(NaN);
 
   const creatingTask = (): void => {
-    if (createTaskValue.trim() === "") return;
+    if (taskValue.trim() === "") return;
     setTasks([...tasks, 
       { 
         id: idCreater++, 
-        text: createTaskValue.trim()
+        text: taskValue.trim()
       }]);
-    setCreateTaskValue("");
+      setTaskValue("");
   }
 
-  const removingTask = (text: string, id: number): void => {
-    const newTasks: Array<Tasks> = tasks.filter( el => el.id !== id || el.text !== text );
+  const removingTask = (id: number): void => {
+    const newTasks: Array<Tasks> = tasks.filter( el => el.id !== id );
     setTasks([...newTasks])
+  }
+
+  const editTask = (id: number): void => {
+    const choiceTask: Array<Tasks> = tasks.filter( el => el.id === id );
+    setTaskValue(choiceTask[0].text);
+    setIsTaskChange(true);
+    setIdChangeableTask(id)
+  }
+
+  const taskChange = (id: number): void => {
+    const tasksWithEditTask: Array<Tasks> = tasks.map( el => el.id === id ? {id: el.id, text: taskValue} : el);
+    setTasks(tasksWithEditTask);
+    setTaskValue("");
+    setIsTaskChange(false);
   }
 
   return (
@@ -39,8 +55,8 @@ function App() {
       <Header/>
       <Container maxWidth="sm">
         <SearchBar value={searchValue} setValue={setSearchValue}/>
-        <CreateTask value={createTaskValue} setValue={setCreateTaskValue} addTask={creatingTask}/>
-        <TaskList tasks={tasks} removingTask={removingTask}/>
+        <CreateTask value={taskValue} setValue={setTaskValue} addTask={creatingTask} isTaskChange={isTaskChange} taskChange={taskChange} idChangeableTask={idChangeableTask}/>
+        <TaskList tasks={tasks} removingTask={removingTask} editTask={editTask}/>
       </Container>
     </>
   )

@@ -4,9 +4,12 @@ interface CreateTaskProps {
     value: string,
     setValue: (str: string) => void,
     addTask: () => void,
+    isTaskChange: boolean,
+    taskChange: (id: number) => void,
+    idChangeableTask: number
 }
 
-const CreateTask = ({value, setValue, addTask}: CreateTaskProps) => {
+const CreateTask = ({value, setValue, addTask, isTaskChange, taskChange, idChangeableTask}: CreateTaskProps) => {
   return (
     <>
         <TextField
@@ -22,9 +25,9 @@ const CreateTask = ({value, setValue, addTask}: CreateTaskProps) => {
         <Button
             variant="outlined"
             sx={{marginTop: "2%"}}
-            onClick={() => addTask()}
+            onClick={(e) => !isTaskChange ? addTask() : taskChange(idChangeableTask)}
         >
-            Create
+            {!isTaskChange ? "Create" : "Edit"}
         </Button>
     </>
   )
