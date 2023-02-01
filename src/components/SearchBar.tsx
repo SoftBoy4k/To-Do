@@ -5,15 +5,15 @@ interface SearchBarProps {
     setValue: (str: string) => void
 }
 
-const SearchBar = ({value, setValue}: SearchBarProps) => {
+const SearchBar = ({ value, setValue }: SearchBarProps) => {
   return (
     <TextField 
         label="Search" 
         variant="standard" 
-        value={value} 
+        value={ value } 
         fullWidth
-        sx={{marginTop: "5%"}} 
-        onChange={ e => setValue(e.target.value)}
+        sx={{ marginTop: "5%" }} 
+        onChange={ e => setValue(e.target.value) }
     />
   )
 }

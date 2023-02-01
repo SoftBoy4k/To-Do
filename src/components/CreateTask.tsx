@@ -9,25 +9,25 @@ interface CreateTaskProps {
     idChangeableTask: number
 }
 
-const CreateTask = ({value, setValue, addTask, isTaskChange, taskChange, idChangeableTask}: CreateTaskProps) => {
+const CreateTask = ({ value, setValue, addTask, isTaskChange, taskChange, idChangeableTask }: CreateTaskProps) => {
   return (
     <>
         <TextField
-            label="New Task" 
+            label={ !isTaskChange ? "New Task" : "Edit Task" }
             variant="outlined" 
             multiline 
             rows={5}
             fullWidth
-            value={value}
+            value={ value }
             onChange={ e => setValue(e.target.value) }
-            sx={{marginTop: "5%"}}
+            sx={{ marginTop: "5%" }}
         />
         <Button
             variant="outlined"
-            sx={{marginTop: "2%"}}
-            onClick={(e) => !isTaskChange ? addTask() : taskChange(idChangeableTask)}
+            sx={{ marginTop: "2%" }}
+            onClick={ () => !isTaskChange ? addTask() : taskChange(idChangeableTask) }
         >
-            {!isTaskChange ? "Create" : "Edit"}
+            { !isTaskChange ? "Create" : "Edit" }
         </Button>
     </>
   )
